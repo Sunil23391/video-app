@@ -1,11 +1,23 @@
+header{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #fafafa;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.work-area.work-area-header{
+  padding: 5px 10px;
+}
 .work-area {
   display: flex;
   height: 100vh;
+  background-color: #eee;
 }
 
 .work-area .video-area {
   flex: 1;
-  background-color: #eee;
   display: flex;
   padding: 1rem;
 }
@@ -13,10 +25,13 @@
 .work-area .iframe-area {
   flex: 1;
   padding: 1rem;
-  background-color: #eee;
 }
 .work-area .iframe-area{
   height: 90vh;
+}
+.work-area .iframe-area iframe{
+  width: 100%;
+  height: calc(100vh - 6rem);
 }
 
 .workarea-video video {

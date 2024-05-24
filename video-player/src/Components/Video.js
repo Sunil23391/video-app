@@ -3,6 +3,7 @@ import Subtitles from "./Subtitles";
 import VideoPlayer from "./VideoPlayer";
 import "./Video.css";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Video({ workspace }) {
   const { location } = useParams();
@@ -55,10 +56,10 @@ function Video({ workspace }) {
       `http://localhost:3002/subtitle/${location}/subtitle.srt`,
     )
       .then((response) => response.text())
-      .then((data) => setSubtitles(someFunction(data)));
+      .then((data) => setSubtitles(parseSrt(data)));
   }, []);
 
-  const someFunction = (data) => {
+  const parseSrt = (data) => {
     const subtitleLines = data
       .split("\n")
       .map((line) => line.replace(/\r/g, ""))
@@ -85,7 +86,7 @@ function Video({ workspace }) {
     const reader = new FileReader();
     reader.onload = () => {
       const data = reader.result;
-      setSubtitles(someFunction(data));
+      setSubtitles(parseSrt(data));
       onVideoPlay();
     };
     reader.readAsText(file);
@@ -117,6 +118,11 @@ function Video({ workspace }) {
   return (
     <div className={`${workspace ? "workarea-video" : "video-app"}`}>
       <header className="app-header">
+        {!workspace && <nav className="app-nav">
+          <Link to="/">
+            <button className="app-nav-back-btn">Back</button>
+          </Link>
+        </nav>}
         <h1>Video Player</h1>
       </header>
       <div className="video-player-container">

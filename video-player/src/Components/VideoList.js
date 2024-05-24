@@ -1,5 +1,6 @@
 import React from "react";
 import "./VideoList.css";
+import baseUrl from "../baseUrl";
 const VideoList = () => {
   const [videos, setVideos] = React.useState([]);
   const [error, setError] = React.useState(null);
@@ -7,7 +8,7 @@ const VideoList = () => {
   React.useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const res = await fetch("http://localhost:3002/videos");
+        const res = await fetch(`${baseUrl}/videos`);
         const data = await res.json();
         setVideos(data);
       } catch (err) {

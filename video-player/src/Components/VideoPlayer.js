@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import baseUrl from "../baseUrl";
 
 const VideoPlayer = forwardRef(
   ({ location, onSubtitleDrop, onSubtitleDragOver, onPlay, onPause }, ref) => {
@@ -33,7 +34,7 @@ const VideoPlayer = forwardRef(
           onPause={handlePause}
         >
           <source
-            src={`http://localhost:3002/stream/${location}/video.mp4`}
+            src={`${baseUrl}/stream/${location}/video.mp4`}
             type="video/mp4"
           />
         </video>

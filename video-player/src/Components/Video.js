@@ -4,6 +4,7 @@ import VideoPlayer from "./VideoPlayer";
 import "./Video.css";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import baseUrl from "../baseUrl";
 
 function Video({ workspace }) {
   const { location } = useParams();
@@ -53,7 +54,7 @@ function Video({ workspace }) {
 
   useEffect(() => {
     fetch(
-      `http://localhost:3002/subtitle/${location}/subtitle.srt`,
+      `${baseUrl}/subtitle/${location}/subtitle.srt`,
     )
       .then((response) => response.text())
       .then((data) => setSubtitles(parseSrt(data)));

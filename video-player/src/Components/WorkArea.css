@@ -1,0 +1,25 @@
+.work-area {
+  display: flex;
+  height: 100vh;
+}
+
+.work-area .video-area {
+  flex: 1;
+  background-color: #eee;
+  display: flex;
+  padding: 1rem;
+}
+
+.work-area .iframe-area {
+  flex: 1;
+  padding: 1rem;
+  background-color: #eee;
+}
+.work-area .iframe-area{
+  height: 90vh;
+}
+
+.workarea-video video {
+  width: 100%;
+  /* width: calc(100% - 2rem); */
+}

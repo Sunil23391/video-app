@@ -1,0 +1,35 @@
+.video-app {
+  --video-width: 100vw;
+}
+.video-app .video-player-container {
+  height: 55vh;
+  padding: 1rem;
+  position: relative;
+  width: calc(var(--video-width) - 3rem);
+}
+
+.video-app .video-player-container video {
+  position: relative;
+  z-index: 0;
+  object-fit: cover; /* Maintain aspect ratio */
+  width: calc(var(--video-width) - 3rem);
+}
+
+.video-app .subtitles-container {
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+  position: relative;
+  margin-top: -5rem;
+}
+
+.video-app .subtitles-settings {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.video-app .subtitles-settings label {
+  display: block;
+}

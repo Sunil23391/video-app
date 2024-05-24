@@ -15,7 +15,7 @@ const Upload = () => {
     formData.append("subtitle", subtitleFile);
     // console.log(formData)
 
-    fetch("http://localhost:3002/upload", {
+    fetch(`${baseUrl}/upload`, {
       method: "POST",
       body: formData,
     })

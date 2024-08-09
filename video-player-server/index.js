@@ -54,10 +54,38 @@ app.get("/videos", (req, res) => {
 app.get("/stream/:folder/:file", (req, res) => {
   const filePath = `./videofiles/${req.params.folder}/${req.params.file}`;
   const stat = require("fs").statSync(filePath);
-  res.header("Content-Length", stat.size);
-  res.header("Content-Type", "video/mp4");
-  const readStream = require("fs").createReadStream(filePath);
-  readStream.pipe(res);
+  const range = req.headers.range;
+  if (range) {
+    // Parse the range header to get the start and end positions of the requested video file segment.
+    const parts = range.replace(/bytes=/, "").split("-");
+    const start = parseInt(parts[0], 10);
+    const end = parts[1] ? parseInt(parts[1], 10) : stat.size - 1;
+    const chunksize = end - start + 1;
+
+    // Create a read stream for the requested video file segment.
+    const file = require("fs").createReadStream(filePath, { start, end });
+
+    // Set the response headers to indicate that the server is capable of handling range requests.
+    const head = {
+      "Content-Range": `bytes ${start}-${end}/${stat.size}`,
+      "Accept-Ranges": "bytes",
+      "Content-Length": chunksize,
+      "Content-Type": "video/mp4",
+    };
+    res.writeHead(206, head);
+
+    // Pipe the requested video file segment to the response stream.
+    file.pipe(res);
+  } else {
+    // Set the response headers to indicate that the requested video file is not a range request and to specify its content type.
+    const head = {
+      "Content-Length": stat.size,
+      "Content-Type": "video/mp4",
+    };
+    res.writeHead(200, head);
+    const readStream = require("fs").createReadStream(filePath);
+    readStream.pipe(res);
+  }
 });
 
 /**

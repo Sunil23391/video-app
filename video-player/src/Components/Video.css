@@ -15,7 +15,13 @@ header{
   margin-top: 10rem;
 }
 .video-app .video-player-buttons{
-  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+}
+.video-app .video-player-buttons button {
+  margin: 0 0.5rem;
 }
 .video-app .video-player-container video {
   position: relative;
@@ -29,12 +35,11 @@ header{
   justify-content: center;
   z-index: 1;
   position: relative;
-  margin-top: -6rem;
 }
 
 .video-app .subtitles-settings {
   position: absolute;
-  top: 0;
+  top: 10px;
   right: 0;
   z-index: 1;
 }

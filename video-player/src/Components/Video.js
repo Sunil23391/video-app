@@ -124,7 +124,7 @@ function Video({ workspace }) {
             <button className="app-nav-back-btn">Back</button>
           </Link>
         </nav>}
-        <h1>Video Player</h1>
+        {/* <h1>Video Player</h1> */}
       </header>
       <div className="video-player-container">
         <VideoPlayer

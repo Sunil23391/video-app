@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Video from "./Video";
 import "./WorkArea.css";
 import { Link } from "react-router-dom";
 
 const WorkArea = () => {
-  const mainUrl = 'https://jupyterlite.github.io/demo/lab/index.html';
+  const mainUrl = 'http://localhost:8888/?token=e4c39e5328cd74e45d8762b3d4484e464bc21ff72322d917';
   const [iframeUrl, setIframeUrl] = useState(mainUrl);
-  const [isSubmitting, setSubmitting] = useState(true);
+  const [isSubmitted, setSubmitted] = useState(true);
 
   const handleUrlChange = (e) => {
     setIframeUrl(e.target.value);
@@ -14,13 +14,19 @@ const WorkArea = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitting(true);
+    setSubmitted(true);
   };
 
   const handleClear = () => {
     setIframeUrl("");
-    setSubmitting(false);
+    setSubmitted(false);
   };
+  
+  useEffect(() => {
+    if (!iframeUrl) {
+      setSubmitted(false);
+    }
+  }, [iframeUrl]);
 
   return (
     <div>
@@ -50,7 +56,7 @@ const WorkArea = () => {
               placeholder="Enter URL for iframe"
             />
 
-            {isSubmitting ? (
+            {isSubmitted ? (
               <>
                 <button onClick={handleClear}>Clear</button>
                 <iframe

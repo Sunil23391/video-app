@@ -21,7 +21,6 @@ header {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .video-app .video-player {
   margin-top: 2rem;
 }
@@ -84,10 +83,20 @@ header {
   border-radius: 5px;
 }
 
-.video-app .subtitles-settings {
-  position: relative;
-  top: 100px;
+.video-app .subtitles-settings-container {
+  position: absolute;
+  top: 0;
   right: 0;
+  z-index: 1;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.video-app .subtitles-settings {
+  position: absolute;
+  top: 0;
+  right: 200px;
   z-index: 1;
   background-color: #fff;
   padding: 1rem;

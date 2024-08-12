@@ -16,6 +16,8 @@ function Video({ workspace }) {
     useState("rgba(0, 0, 0, 0.5)");
   const [subtitlesFontSize, setSubtitlesFontSize] = useState(24);
   const [currentSubtitle, setCurrentSubtitle] = useState(null);
+  const [isSubtitleSettingsVisible,setSubtitlesSettingsVisible] = useState(false);
+  const [syncTime, setSyncTime] = useState(2);
   let intervalId = useRef(null);
 
   const videoRef = useRef(null);
@@ -30,18 +32,24 @@ function Video({ workspace }) {
     );
   };
 
+  const syncSubtitle = async (val) => {
+    setSyncTime(syncTime + val);
+    clearInterval(intervalId.current);
+    onVideoPlay();
+  };
+
+  const onCurrentSubtitleChange = () => {
+    const currentTimeInSec = videoRef.current.currentTime + syncTime;
+    const currentSubtitle = subtitles.find((subtitle) => {
+      const fromTimeInSec = timeToSec(subtitle.fromTime);
+      const toTimeInSec = timeToSec(subtitle.toTime);
+      return (
+        currentTimeInSec >= fromTimeInSec && currentTimeInSec < toTimeInSec
+      );
+    });
+    currentSubtitle && setCurrentSubtitle(currentSubtitle);
+  };
   const onVideoPlay = () => {
-    const onCurrentSubtitleChange = () => {
-      const currentTimeInSec = videoRef.current.currentTime + 2;
-      const currentSubtitle = subtitles.find((subtitle) => {
-        const fromTimeInSec = timeToSec(subtitle.fromTime);
-        const toTimeInSec = timeToSec(subtitle.toTime);
-        return (
-          currentTimeInSec >= fromTimeInSec && currentTimeInSec < toTimeInSec
-        );
-      });
-      currentSubtitle && setCurrentSubtitle(currentSubtitle);
-    };
     if (subtitles.length) {
       onCurrentSubtitleChange();
       intervalId.current = setInterval(onCurrentSubtitleChange, 500);
@@ -143,7 +151,10 @@ function Video({ workspace }) {
           onSubtitleDragStart={onSubtitleDragStart}
         />
       </div>
-      <div className="subtitles-settings">
+      <div className="subtitles-settings-container">
+        <button onClick={()=>setSubtitlesSettingsVisible(!isSubtitleSettingsVisible)}>Subtitles Settings</button>
+      </div>
+      {isSubtitleSettingsVisible && <div className="subtitles-settings">
         <label>
           Subtitles color:
           <input
@@ -168,14 +179,16 @@ function Video({ workspace }) {
             onChange={onSubtitlesFontSizeChange}
           />
         </label>
-      </div>
-      {/* <div className="subtitles-list">
-        {subtitles.map((subtitle, index) => (
-          <div key={index} onClick={() => onSubtitleClick(subtitle)}>
-            {subtitle.text}
-          </div>
-        ))}
-      </div> */}
+        <button className="subtitle-sync-btn" onClick={()=>syncSubtitle(+1)}>
+          Sync Subtitle + 
+        </button> 
+        <button className="subtitle-sync-btn" onClick={()=>syncSubtitle(-1)}>
+          Sync Subtitle -
+        </button>
+        <label>
+          Sync time: {syncTime}
+        </label>
+      </div>}
     </div>
   );
 }

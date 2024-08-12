@@ -33,7 +33,9 @@ const Upload = () => {
     <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px 30px", borderRadius: "10px", backgroundColor: "#fafafa", boxShadow: "0 0 10px rgba(0,0,0,0.1)"}}>
       <h2 style={{margin: "10px 0", textAlign: "center", fontSize: "24px", padding: "0 10px"}}>Upload Video</h2>
       <form onSubmit={handleSubmit} action="/upload" method="post" enctype="multipart/form-data" style={{display: "flex", flexDirection: "column", alignItems: "center", width: "500px", padding: "20px"}}>
+        Video:
         <input type="file" name="video" onChange={handleChangeVideo} style={{width: "100%", padding: "10px", borderRadius: "5px"}}/>
+        Subtitle:
         <input type="file" name="subtitle" onChange={handleChangeSubtitle} style={{width: "100%", padding: "10px", borderRadius: "5px"}}/>
         <button type="submit" style={{width: "100%", backgroundColor: "#007bff", color: "white", padding: "10px", borderRadius: "5px", fontSize: "16px"}}>Upload</button>
       </form>

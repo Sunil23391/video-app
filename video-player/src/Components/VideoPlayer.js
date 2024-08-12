@@ -40,9 +40,9 @@ const VideoPlayer = forwardRef(
           <source src={`${baseUrl}/stream/${location}/video.mp4`} type="video/mp4" />
         </video>
         <div className="video-player-buttons">
-          <button onClick={handleSlowDown}>Slow Down</button>
-          <button onClick={handleSpeedUp}>Speed Up</button>
-          <p>Current speed: {currentSpeed.toFixed(2)}</p>
+          <button class="control-btn" onClick={handleSlowDown}>Slow Down</button>
+          <button class="control-btn" onClick={handleSpeedUp}>Speed Up</button>
+          <p  class="current-speed">Current speed: {currentSpeed.toFixed(2)}</p>
         </div>
       </div>
     );

@@ -4,7 +4,7 @@ import "./WorkArea.css";
 import { Link } from "react-router-dom";
 
 const WorkArea = () => {
-  const mainUrl = 'http://localhost:8888/?token=e4c39e5328cd74e45d8762b3d4484e464bc21ff72322d917';
+  const mainUrl = 'https://jupyter.org/try-jupyter/lab/';
   const [iframeUrl, setIframeUrl] = useState(mainUrl);
   const [isSubmitted, setSubmitted] = useState(true);
 

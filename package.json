@@ -4,13 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-server": "cd ./video-player-server && if [ -e node_modules ]; then npm start; else npm install && npm start; fi",
-    "start-frontend": "cd ./video-player && if [ -e node_modules ]; then npm start; else npm install && npm start; fi",
+    "start-server": "node start-script.js --directory=./video-player-server",
+    "start-frontend": "node start-script.js --directory=./video-player",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "concurrently": "^8.2.2"
-  }
+  "license": "ISC"
 }

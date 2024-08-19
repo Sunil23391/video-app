@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect } from "react";
 import baseUrl from "../baseUrl";
 
 const VideoPlayer = forwardRef(
@@ -33,6 +33,24 @@ const VideoPlayer = forwardRef(
       setCurrentSpeed(ref.current.playbackRate);
     };
 
+    useEffect(() => {
+      const handleKeyDown = (event) => {
+        if (event.key === "ArrowRight") {
+          event.preventDefault(); // Prevent the default action
+          ref.current.currentTime = Math.min(ref.current.currentTime - 917, ref.current.duration);
+        }
+        if (event.key === "ArrowLeft") {
+          event.preventDefault(); // Prevent the default action
+          ref.current.currentTime = Math.min(ref.current.currentTime + 917, ref.current.duration);
+        }
+      };
+      const videoElement = ref.current;
+      videoElement.addEventListener("keydown", handleKeyDown);
+
+      return () => {
+        videoElement.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [ref]);
 
     return (
       <div className="video-player" onDrop={handleSubtitleDrop} onDragOver={handleSubtitleDragOver}>
@@ -42,7 +60,7 @@ const VideoPlayer = forwardRef(
         <div className="video-player-buttons">
           <button class="control-btn" onClick={handleSlowDown}>Slow Down</button>
           <button class="control-btn" onClick={handleSpeedUp}>Speed Up</button>
-          <p  class="current-speed">Current speed: {currentSpeed.toFixed(2)}</p>
+          <p class="current-speed">Current speed: {currentSpeed.toFixed(2)}</p>
         </div>
       </div>
     );

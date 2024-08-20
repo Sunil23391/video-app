@@ -34,7 +34,6 @@ function Video({ workspace }) {
 
   const syncSubtitle = async (val) => {
     setSyncTime(syncTime + val);
-    clearInterval(intervalId.current);
     onVideoPlay();
   };
 
@@ -52,6 +51,7 @@ function Video({ workspace }) {
   const onVideoPlay = () => {
     if (subtitles.length) {
       onCurrentSubtitleChange();
+      clearInterval(intervalId.current);
       intervalId.current = setInterval(onCurrentSubtitleChange, 500);
     }
   };

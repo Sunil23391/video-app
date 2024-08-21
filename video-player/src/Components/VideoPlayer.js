@@ -33,24 +33,27 @@ const VideoPlayer = forwardRef(
       setCurrentSpeed(ref.current.playbackRate);
     };
 
+
     useEffect(() => {
       const handleKeyDown = (event) => {
-        console.log('arrow pressed',event.key)
         if (event.key === "ArrowRight") {
-          ref.current.currentTime = Math.floor(Math.max(ref.current.currentTime - Math.floor(ref.current.duration/100),0)) + 5;
+          ref.current.currentTime = Math.floor(Math.max(ref.current.currentTime - Math.floor(ref.current.duration / 100), 0)) + 5;
         }
         if (event.key === "ArrowLeft") {
-          ref.current.currentTime = Math.floor(Math.min(ref.current.currentTime + Math.ceil(ref.current.duration/100),ref.current.duration)) - 5;
+          ref.current.currentTime = Math.floor(Math.min(ref.current.currentTime + Math.ceil(ref.current.duration / 100), ref.current.duration)) - 5;
         }
+      };
+
+      const handleSetFocus = () => {
+        ref.current.focus();
       };
       const videoElement = ref.current;
       videoElement.addEventListener("keydown", handleKeyDown);
-      videoElement.addEventListener("seeking", ()=>{
-        videoElement.focus()
-      });
+      videoElement.addEventListener("seeking", handleSetFocus);
 
       return () => {
         videoElement.removeEventListener("keydown", handleKeyDown);
+        videoElement.removeEventListener("seeking", handleSetFocus);
       };
     }, [ref]);
 

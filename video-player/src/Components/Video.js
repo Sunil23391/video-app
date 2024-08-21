@@ -17,6 +17,7 @@ function Video({ workspace }) {
   const [subtitlesFontSize, setSubtitlesFontSize] = useState(24);
   const [currentSubtitle, setCurrentSubtitle] = useState(null);
   const [isSubtitleSettingsVisible,setSubtitlesSettingsVisible] = useState(false);
+  const [isVideoSettingsVisible,setVideoSettingsVisible] = useState(false);
   const [syncTime, setSyncTime] = useState(2);
   let intervalId = useRef(null);
 
@@ -119,6 +120,14 @@ function Video({ workspace }) {
     setSubtitlesFontSize(event.target.value);
   };
 
+  const onVideoZoomChange = (event) => {
+    const sliderValue = +event.target.value || 0;
+    const scale = 1 + (sliderValue/100) * 0.2;
+    const translateX = (sliderValue/100) * 115;
+    const translateY = -(sliderValue/100) * 56;
+    videoRef.current.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+  };
+
   return (
     <div className={`${workspace ? "workarea-video" : "video-app"}`}>
       <header className="app-header">
@@ -127,7 +136,6 @@ function Video({ workspace }) {
             <button className="app-nav-back-btn">Back</button>
           </Link>
         </nav>}
-        {/* <h1>Video Player</h1> */}
       </header>
       <div className="video-player-container">
         <VideoPlayer
@@ -146,9 +154,17 @@ function Video({ workspace }) {
           onSubtitleDragStart={onSubtitleDragStart}
         />
       </div>
-      <div className="subtitles-settings-container">
+      <div className="settings-container">
         <button onClick={()=>setSubtitlesSettingsVisible(!isSubtitleSettingsVisible)}>Subtitles Settings</button>
+        <button onClick={()=>setVideoSettingsVisible(!isVideoSettingsVisible)}>Video Settings</button>
       </div>
+      
+      {isVideoSettingsVisible && <div className="video-settings">
+        <label>
+          Video zoom:
+          <input type="range" min="0" max="100" step={1} onChange={onVideoZoomChange} />
+        </label>
+      </div>}
       {isSubtitleSettingsVisible && <div className="subtitles-settings">
         <label>
           Subtitles color:

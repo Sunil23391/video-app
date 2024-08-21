@@ -66,7 +66,7 @@ function Video({ workspace }) {
     )
       .then((response) => response.text())
       .then((data) => setSubtitles(parseSrt(data)));
-  }, []);
+  }, [location]);
 
   const parseSrt = (data) => {
     const subtitleLines = data
@@ -117,11 +117,6 @@ function Video({ workspace }) {
 
   const onSubtitlesFontSizeChange = (event) => {
     setSubtitlesFontSize(event.target.value);
-  };
-
-  const onSubtitleClick = (subtitle) => {
-    setCurrentSubtitle(subtitle);
-    videoRef.current.currentTime = timeToSec(subtitle.fromTime) + 2;
   };
 
   return (
